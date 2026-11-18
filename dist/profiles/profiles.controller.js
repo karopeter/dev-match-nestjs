@@ -10,35 +10,35 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-import { Controller, Get, Query, Param, Post, Body, Put, Delete, HttpCode, HttpStatus } from '@nestjs/common';
+import { Controller, Get, Param, Post, Body, Put, Delete, HttpCode, HttpStatus } from '@nestjs/common';
 import { CreateProfileDto } from './dto/create-profile.dto.js';
 import { UpdateProfileDto } from './dto/update-profile.dto.js';
+import { ProfilesService } from './profiles.service.js';
 let ProfilesController = class ProfilesController {
-    findAll(location) {
-        return [{ location }];
+    profileService;
+    constructor(profileService) {
+        this.profileService = profileService;
+    }
+    findAll() {
+        return this.profileService.findAll();
     }
     findOne(id) {
-        return { id };
+        return this.profileService.findOne(id);
     }
-    create(CreateProfileDto) {
-        return {
-            name: CreateProfileDto.name,
-            description: CreateProfileDto.description
-        };
+    create(createProfileDto) {
+        return this.profileService.create(createProfileDto);
     }
     update(id, updateProfileDto) {
-        return {
-            id,
-            ...updateProfileDto
-        };
+        return this.profileService.update(id, updateProfileDto);
     }
-    remove(id) { }
+    remove(id) {
+        return this.profileService.remove(id);
+    }
 };
 __decorate([
     Get(),
-    __param(0, Query('location')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
+    __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], ProfilesController.prototype, "findAll", null);
 __decorate([
@@ -72,7 +72,8 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], ProfilesController.prototype, "remove", null);
 ProfilesController = __decorate([
-    Controller('profiles')
+    Controller('profiles'),
+    __metadata("design:paramtypes", [ProfilesService])
 ], ProfilesController);
 export { ProfilesController };
 //# sourceMappingURL=profiles.controller.js.map
