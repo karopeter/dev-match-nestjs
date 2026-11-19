@@ -31,7 +31,7 @@ export class ProfilesService {
     const matchingProfile = this.profiles.find((profile) => profile.id === id);
 
     if (!matchingProfile) {
-        throw new NotFoundException(`Profile with ID ${id} not found.`);
+        throw new Error(`Profile with ID ${id} not found.`);
     }
 
     return matchingProfile;
@@ -71,7 +71,7 @@ export class ProfilesService {
     if (matchingProfileIndex === -1) {
      throw new NotFoundException(`Profile with ID ${id} not found.`);
     }
-    
+
     this.profiles.splice(matchingProfileIndex, 1);
   }
 }
